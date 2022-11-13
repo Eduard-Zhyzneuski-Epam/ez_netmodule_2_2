@@ -15,10 +15,4 @@
     <ProjectReference Include="..\NetModule2_2.BAL\NetModule2_2.BAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="catalog.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

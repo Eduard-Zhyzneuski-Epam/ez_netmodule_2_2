@@ -8,10 +8,10 @@ namespace NetModule2_2.DAL
 {
     public interface IItemRepository
     {
-        Item Get(string name);
+        Item Get(int id);
         List<Item> List();
         void Add(Item item);
         void Update(Item item);
-        void Delete(string name);
+        void Delete(int id);
     }
 }

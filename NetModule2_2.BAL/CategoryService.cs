@@ -19,66 +19,35 @@ namespace NetModule2_2.BAL
         public void Add(Category category)
         {
             ValidateCategory(category);
-            var dbCategory = new DAL.Category
-            {
-                Name = category.Name,
-                Image = category.Image,
-                ParentCategoryName = category.ParentCategory?.Name
-            };
+            var dbCategory = Mapping.Map<Category, DAL.Category>(category);
             categoryRepository.Add(dbCategory);
         }
 
-        public void Delete(string name)
+        public void Delete(int id)
         {
-            categoryRepository.Delete(name);
+            categoryRepository.Delete(id);
         }
 
-        public Category Get(string name)
+        public Category Get(int id)
         {
-            var dbCategory = categoryRepository.Get(name);
+            var dbCategory = categoryRepository.Get(id);
             if (dbCategory is null)
                 throw new CategoryNotFoundException();
-            var leaf = new Category { Name = dbCategory.Name, Image = dbCategory.Image };
-            var currentCategory = leaf;
-            while (dbCategory.ParentCategoryName != null)
-            {
-                dbCategory = categoryRepository.Get(dbCategory.ParentCategoryName);
-                var newRootCategory = new Category { Name = dbCategory.Name, Image = dbCategory.Image };
-                currentCategory.ParentCategory = newRootCategory;
-                currentCategory = newRootCategory;
-            }
-            return leaf;
+            return Mapping.Map<DAL.Category, Category>(dbCategory);
         }
 
         public List<Category> List()
         {
             var dbCategories = categoryRepository.List();
-            return dbCategories.Select(dbCategory =>
-            {
-                var leaf = new Category { Name = dbCategory.Name, Image = dbCategory.Image };
-                var currentCategory = leaf;
-                while (dbCategory.ParentCategoryName != null)
-                {
-                    dbCategory = dbCategories.First(c => c.Name == dbCategory.ParentCategoryName);
-                    var newRootCategory = new Category { Name = dbCategory.Name, Image = dbCategory.Image };
-                    currentCategory.ParentCategory = newRootCategory;
-                    currentCategory = newRootCategory;
-                }
-                return leaf;
-            }).ToList();
+            return dbCategories.Select(dbCategory => Mapping.Map<DAL.Category, Category>(dbCategory)).ToList();
         }
 
         public void Update(Category category)
         {
             ValidateCategory(category);
-            if (categoryRepository.Get(category.Name) is null)
+            if (categoryRepository.Get(category.Id) is null)
                 throw new CategoryNotFoundException();
-            var dbCategory = new DAL.Category
-            {
-                Name = category.Name,
-                Image = category.Image,
-                ParentCategoryName = category.ParentCategory?.Name
-            };
+            var dbCategory = Mapping.Map<Category, DAL.Category>(category);
             categoryRepository.Update(dbCategory);
         }
 

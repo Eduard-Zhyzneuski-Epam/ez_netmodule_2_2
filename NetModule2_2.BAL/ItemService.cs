@@ -21,70 +21,36 @@ namespace NetModule2_2.BAL
         public void Add(Item item)
         {
             ValidateItem(item);
-            var dbItem = new DAL.Item
-            {
-                Name = item.Name,
-                CategoryName = item.Category.Name,
-                Amount = item.Amount,
-                Description = item.Description,
-                Image = item.Image,
-                Price = (double)item.Price
-            };
+            var dbItem = Mapping.Map<Item, DAL.Item>(item);
             itemRepository.Add(dbItem);
         }
 
-        public void Delete(string name)
+        public void Delete(int id)
         {
-            itemRepository.Delete(name);
+            itemRepository.Delete(id);
         }
 
-        public Item Get(string name)
+        public Item Get(int id)
         {
-            var dbItem = itemRepository.Get(name);
+            var dbItem = itemRepository.Get(id);
             if (dbItem is null)
                 throw new ItemNotFoundException();
-            var category = categoryService.Get(dbItem.CategoryName);
-            return new Item
-            {
-                Name = dbItem.Name,
-                Amount = dbItem.Amount,
-                Description = dbItem.Description,
-                Category = category,
-                Image = dbItem.Image,
-                Price = (decimal)dbItem.Price
-            };
+            return Mapping.Map<DAL.Item, Item>(dbItem);
         }
 
         public List<Item> List()
         {
             var dbItems = itemRepository.List();
-            var categories = categoryService.List();
-            return dbItems.Select(i => new Item
-            {
-                Name = i.Name,
-                Amount = i.Amount,
-                Category = categories.First(c => c.Name == i.CategoryName),
-                Description = i.Description,
-                Price = (decimal)i.Price,
-                Image = i.Image
-            }).ToList();
+            return dbItems.Select(dbItem => Mapping.Map<DAL.Item, Item>(dbItem)).ToList();
         }
 
         public void Update(Item item)
         {
             ValidateItem(item);
-            if (itemRepository.Get(item.Name) is null)
+            if (itemRepository.Get(item.Id) is null)
                 throw new ItemNotFoundException();
-            var dbItem = new DAL.Item
-            {
-                Name = item.Name,
-                CategoryName = item.Category.Name,
-                Amount = item.Amount,
-                Description = item.Description,
-                Image = item.Image,
-                Price = (double)item.Price
-            };
-            itemRepository.Add(dbItem);
+            var dbItem = Mapping.Map<Item, DAL.Item>(item);
+            itemRepository.Update(dbItem);
         }
 
         private void ValidateItem(Item item)
@@ -94,7 +60,7 @@ namespace NetModule2_2.BAL
                 errors.Add("Item name is empty");
             if (item.Name.Length > 50)
                 errors.Add("Item name is too long");
-            if (item.Category is null || item.Category.Name is null || item.Category.Name == "")
+            if (item.CategoryId == 0)
                 errors.Add("Category required");
             if (item.Price < 0)
                 errors.Add("Price should be non-negative");

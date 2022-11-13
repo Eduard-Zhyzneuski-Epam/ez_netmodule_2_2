@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,36 +10,36 @@ namespace NetModule2_2.DAL
 {
     internal class CategoryRepository : ICategoryRepository
     {
-        private readonly string connectionString = "Data Source=catalog.db";
+        private readonly string connectionString = "server=localhost;port=3306;database=catalog;uid=root;password=123456";
 
-        public Category Get(string name)
+        public Category Get(int id)
         {
-            using var connection = new SqliteConnection(connectionString);
-            return connection.Query<Category>("SELECT * FROM Category WHERE Name = {=name}", new { name = name }).Single();
+            using var connection = new MySqlConnection(connectionString);
+            return connection.Query<Category>("SELECT * FROM Category WHERE Id = {=id}", new { id }).Single();
         }
 
         public List<Category> List()
         {
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new MySqlConnection(connectionString);
             return connection.Query<Category>("SELECT * FROM Category").ToList();
         }
 
         public void Add(Category category)
         {
-            using var connection = new SqliteConnection(connectionString);
-            connection.Execute("INSERT INTO Category (Name, Image, ParentCategoryName) VALUES (@Name, @Image, @ParentCategoryName)", category);
+            using var connection = new MySqlConnection(connectionString);
+            connection.Execute("INSERT INTO Category (Name, Image, ParentCategoryId) VALUES (@Name, @Image, @ParentCategoryId)", category);
         }
 
         public void Update(Category category)
         {
-            using var connection = new SqliteConnection(connectionString);
-            connection.Execute("UPDATE Category SET ParentCategoryname=@ParentCategoryName, Image=@Image WHERE Name = @Name", category);
+            using var connection = new MySqlConnection(connectionString);
+            connection.Execute("UPDATE Category SET Name = @Name, ParentCategoryId=@ParentCategoryId, Image=@Image WHERE Id = @Id", category);
         }
 
-        public void Delete(string name)
+        public void Delete(int id)
         {
-            using var connection = new SqliteConnection(connectionString);
-            connection.Execute("DELETE FROM Category WHERE Name=@name", new { name = name });
+            using var connection = new MySqlConnection(connectionString);
+            connection.Execute("DELETE FROM Category WHERE Name=@name", new { id });
         }
     }
 }

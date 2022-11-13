@@ -8,10 +8,10 @@ namespace NetModule2_2.DAL
 {
     public interface ICategoryRepository
     {
-        Category Get(string name);
+        Category Get(int id);
         List<Category> List();
         void Add(Category category);
         void Update(Category category);
-        void Delete(string name);
+        void Delete(int id);
     }
 }
