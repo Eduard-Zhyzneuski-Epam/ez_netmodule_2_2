@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace NetModule2_2.BAL
 {
-    public class ItemNotFoundException : EntityNotFoundException
+    public class InvalidEntityException : Exception
     {
+        public InvalidEntityException(string message) : base(message) { }
     }
 }

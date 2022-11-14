@@ -15,19 +15,20 @@ namespace NetModule2_2.DAL
         public Category Get(int id)
         {
             using var connection = new MySqlConnection(connectionString);
-            return connection.Query<Category>("SELECT * FROM Category WHERE Id = {=id}", new { id }).Single();
+            return connection.Query<Category>("SELECT * FROM Category WHERE Id = {=id}", new { id }).SingleOrDefault();
         }
 
         public List<Category> List()
         {
             using var connection = new MySqlConnection(connectionString);
-            return connection.Query<Category>("SELECT * FROM Category").ToList();
+            return connection.Query<Category>("SELECT * FROM Category ORDER BY NAME").ToList();
         }
 
-        public void Add(Category category)
+        public int Add(Category category)
         {
             using var connection = new MySqlConnection(connectionString);
             connection.Execute("INSERT INTO Category (Name, Image, ParentCategoryId) VALUES (@Name, @Image, @ParentCategoryId)", category);
+            return connection.Query<int>("SELECT Id FROM Category WHERE Name = @Name", category).Single();
         }
 
         public void Update(Category category)
@@ -39,7 +40,7 @@ namespace NetModule2_2.DAL
         public void Delete(int id)
         {
             using var connection = new MySqlConnection(connectionString);
-            connection.Execute("DELETE FROM Category WHERE Name=@name", new { id });
+            connection.Execute("DELETE FROM Category WHERE Id=@id", new { id });
         }
     }
 }

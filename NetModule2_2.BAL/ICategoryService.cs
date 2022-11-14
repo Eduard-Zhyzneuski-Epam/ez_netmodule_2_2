@@ -10,7 +10,7 @@ namespace NetModule2_2.BAL
     {
         Category Get(int id);
         List<Category> List();
-        void Add(Category category);
+        int Add(Category category);
         void Update(Category category);
         void Delete(int id);
     }

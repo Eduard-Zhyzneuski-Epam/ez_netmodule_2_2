@@ -10,21 +10,24 @@ namespace NetModule2_2.BAL
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;
+        private readonly IItemRepository itemRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IItemRepository itemRepository)
         {
             this.categoryRepository = categoryRepository;
+            this.itemRepository = itemRepository;
         }
 
-        public void Add(Category category)
+        public int Add(Category category)
         {
             ValidateCategory(category);
             var dbCategory = Mapping.Map<Category, DAL.Category>(category);
-            categoryRepository.Add(dbCategory);
+            return categoryRepository.Add(dbCategory);
         }
 
         public void Delete(int id)
         {
+            itemRepository.DeleteCategory(id);
             categoryRepository.Delete(id);
         }
 
@@ -58,6 +61,8 @@ namespace NetModule2_2.BAL
                 errors.Add("Empty category name");
             if (category.Name.Length > 50)
                 errors.Add("Category name too long");
+            if (category.ParentCategoryId is not null && categoryRepository.Get(category.ParentCategoryId.Value) is null)
+                errors.Add("Parent category does not exist");
             if (errors.Any())
                 throw new InvalidCategoryException(string.Join("; ", errors));
         }

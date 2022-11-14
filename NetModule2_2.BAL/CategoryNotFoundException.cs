@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetModule2_2.BAL
 {
-    public class CategoryNotFoundException : Exception
+    public class CategoryNotFoundException : EntityNotFoundException
     {
     }
 }

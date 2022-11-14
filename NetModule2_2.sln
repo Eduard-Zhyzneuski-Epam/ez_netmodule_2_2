@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetModule2_2.DAL", "NetModu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetModule2_2.BAL", "NetModule2_2.BAL\NetModule2_2.BAL.csproj", "{3CBE37C2-FE02-4501-9D3A-E8C7D77FC556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetModule2_2", "NetModule2_2\NetModule2_2.csproj", "{C26C0285-9B2C-4BF4-8062-5C4684575814}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetModule2_2.NAL", "NetModule2_2.NAL\NetModule2_2.NAL.csproj", "{151247E5-6285-4B12-9596-B492FFDA0E29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{3CBE37C2-FE02-4501-9D3A-E8C7D77FC556}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CBE37C2-FE02-4501-9D3A-E8C7D77FC556}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CBE37C2-FE02-4501-9D3A-E8C7D77FC556}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C26C0285-9B2C-4BF4-8062-5C4684575814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C26C0285-9B2C-4BF4-8062-5C4684575814}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C26C0285-9B2C-4BF4-8062-5C4684575814}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C26C0285-9B2C-4BF4-8062-5C4684575814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{151247E5-6285-4B12-9596-B492FFDA0E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{151247E5-6285-4B12-9596-B492FFDA0E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{151247E5-6285-4B12-9596-B492FFDA0E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{151247E5-6285-4B12-9596-B492FFDA0E29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

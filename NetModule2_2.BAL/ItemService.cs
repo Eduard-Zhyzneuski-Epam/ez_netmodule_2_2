@@ -10,19 +10,17 @@ namespace NetModule2_2.BAL
     public class ItemService : IItemService
     {
         private readonly IItemRepository itemRepository;
-        private readonly ICategoryService categoryService;
 
-        public ItemService(IItemRepository itemRepository, ICategoryService categoryService)
+        public ItemService(IItemRepository itemRepository)
         {
             this.itemRepository = itemRepository;
-            this.categoryService = categoryService;
         }
 
-        public void Add(Item item)
+        public int Add(Item item)
         {
             ValidateItem(item);
             var dbItem = Mapping.Map<Item, DAL.Item>(item);
-            itemRepository.Add(dbItem);
+            return itemRepository.Add(dbItem);
         }
 
         public void Delete(int id)
@@ -38,10 +36,14 @@ namespace NetModule2_2.BAL
             return Mapping.Map<DAL.Item, Item>(dbItem);
         }
 
-        public List<Item> List()
+        public List<Item> List(int? categoryId, int pageSize, int pageNumber, out bool doWeHaveNextPage)
         {
-            var dbItems = itemRepository.List();
-            return dbItems.Select(dbItem => Mapping.Map<DAL.Item, Item>(dbItem)).ToList();
+            var dbItems = itemRepository.List(categoryId);
+            doWeHaveNextPage = dbItems.Count < pageSize * pageNumber;
+            return dbItems
+                .Skip(pageSize * pageNumber - 1)
+                .Take(pageSize)
+                .Select(dbItem => Mapping.Map<DAL.Item, Item>(dbItem)).ToList();
         }
 
         public void Update(Item item)

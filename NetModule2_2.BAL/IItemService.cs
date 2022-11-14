@@ -9,8 +9,8 @@ namespace NetModule2_2.BAL
     public interface IItemService
     {
         Item Get(int id);
-        List<Item> List();
-        void Add(Item item);
+        List<Item> List(int? categoryId, int pageSize, int pageNumber, out bool doWeHaveNextPage);
+        int Add(Item item);
         void Update(Item item);
         void Delete(int id);
     }

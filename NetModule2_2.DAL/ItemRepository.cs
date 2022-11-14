@@ -10,19 +10,20 @@ namespace NetModule2_2.DAL
         public Item Get(int id)
         {
             using var connection = new MySqlConnection(connectionString);
-            return connection.Query<Item>("SELECT * FROM Item WHERE Id = {=id}", new { id }).FirstOrDefault();
+            return connection.Query<Item>("SELECT * FROM Item WHERE Id = @Id", new { id }).SingleOrDefault();
         }
 
-        public List<Item> List()
+        public List<Item> List(int? categoryId)
         {
             using var connection = new MySqlConnection(connectionString);
-            return connection.Query<Item>("SELECT * FROM Item").ToList();
+            return connection.Query<Item>("SELECT * FROM Item WHERE @categoryId IS NULL OR CategoryId = @categoryId ORDER BY Name", new { categoryId }).ToList();
         }
 
-        public void Add(Item item)
+        public int Add(Item item)
         {
             using var connection = new MySqlConnection(connectionString);
             connection.Execute("INSERT INTO Item (Name, Description, Image, CategoryName, Price, Amount) VALUES (@Name, @Description, @Image, @CategoryName, @Price, @Amount)", item);
+            return connection.Query<int>("SELECT * FROM Item WHERE Name = @Name", item).Single();
         }
 
         public void Update(Item item)
@@ -34,8 +35,13 @@ namespace NetModule2_2.DAL
         public void Delete(int id)
         {
             using var connection = new MySqlConnection(connectionString);
-            connection.Execute("DELETE FROM Item WHERE Name=@name", new { id });
+            connection.Execute("DELETE FROM Item WHERE Id=@id", new { id });
         }
 
+        public void DeleteCategory(int categoryId)
+        {
+            using var connection = new MySqlConnection(connectionString);
+            connection.Execute("DELETE FROM Item WHERE CategoryId=@categoryId", new { categoryId });
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetModule2_2.BAL
 {
-    public class InvalidCategoryException : Exception
+    public class InvalidCategoryException : InvalidEntityException
     {
         public InvalidCategoryException(string message) : base(message) { }
     }
