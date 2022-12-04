@@ -8,12 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.5.0" />
-    <PackageReference Include="AutoMapper" Version="12.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\NetModule2_2.DAL\NetModule2_2.DAL.csproj" />
-    <ProjectReference Include="..\NetModule2_2.MAL\NetModule2_2.EAL.csproj" />
+    <PackageReference Include="RabbitMQ" Version="3.6.2" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
   </ItemGroup>
 
 </Project>

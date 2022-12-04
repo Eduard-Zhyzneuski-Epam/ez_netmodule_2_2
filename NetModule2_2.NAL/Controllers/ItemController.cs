@@ -59,9 +59,10 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpPut("/item/{id}")]
-        public IActionResult Update([FromBody] UpdatedItem item)
+        public IActionResult Update([FromBody] UpdatedItem item, [FromRoute] int id)
         {
             var rawItem = Mapping.Map<UpdatedItem, BAL.Item>(item);
+            rawItem.Id = id;
             itemService.Update(rawItem);
             return NoContent();
         }

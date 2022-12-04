@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using NetModule2_2.BAL;
 using NetModule2_2.DAL;
+using NetModule2_2.EAL;
 using NetModule2_2.NAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule<DalModule>();
     builder.RegisterModule<BalModule>();
+    builder.RegisterModule<EalModule>();
 });
 
 builder.Services.AddControllers(options =>

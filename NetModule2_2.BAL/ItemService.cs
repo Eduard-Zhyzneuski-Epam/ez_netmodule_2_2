@@ -1,4 +1,5 @@
 ﻿using NetModule2_2.DAL;
+using NetModule2_2.EAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace NetModule2_2.BAL
     public class ItemService : IItemService
     {
         private readonly IItemRepository itemRepository;
+        private readonly IChangedItemEventPublisher changedItemEventPublisher;
 
-        public ItemService(IItemRepository itemRepository)
+        public ItemService(IItemRepository itemRepository, IChangedItemEventPublisher changedItemEventPublisher)
         {
             this.itemRepository = itemRepository;
+            this.changedItemEventPublisher = changedItemEventPublisher;
         }
 
         public int Add(Item item)
@@ -51,8 +54,12 @@ namespace NetModule2_2.BAL
             ValidateItem(item);
             if (itemRepository.Get(item.Id) is null)
                 throw new ItemNotFoundException();
+
             var dbItem = Mapping.Map<Item, DAL.Item>(item);
             itemRepository.Update(dbItem);
+
+            var changedItem = Mapping.Map<Item, EAL.ChangedItem>(item);
+            changedItemEventPublisher.Publish(changedItem);
         }
 
         private void ValidateItem(Item item)

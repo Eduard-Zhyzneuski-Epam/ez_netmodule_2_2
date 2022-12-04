@@ -22,14 +22,14 @@ namespace NetModule2_2.DAL
         public int Add(Item item)
         {
             using var connection = new MySqlConnection(connectionString);
-            connection.Execute("INSERT INTO Item (Name, Description, Image, CategoryName, Price, Amount) VALUES (@Name, @Description, @Image, @CategoryName, @Price, @Amount)", item);
+            connection.Execute("INSERT INTO Item (Name, Description, Image, CategoryId, Price, Amount) VALUES (@Name, @Description, @Image, @CategoryId, @Price, @Amount)", item);
             return connection.Query<int>("SELECT * FROM Item WHERE Name = @Name", item).Single();
         }
 
         public void Update(Item item)
         {
             using var connection = new MySqlConnection(connectionString);
-            connection.Execute("UPDATE Item SET Name=@Name, Description=@Description, Image=@Image, CategoryName=@CategoryName, Price=@Price, Amount=@Amount WHERE Id = @Id", item);
+            connection.Execute("UPDATE Item SET Name=@Name, Description=@Description, Image=@Image, CategoryId=@CategoryId, Price=@Price, Amount=@Amount WHERE Id = @Id", item);
         }
 
         public void Delete(int id)

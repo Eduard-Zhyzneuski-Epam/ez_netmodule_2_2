@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetModule2_2.DAL", "NetModu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetModule2_2.BAL", "NetModule2_2.BAL\NetModule2_2.BAL.csproj", "{3CBE37C2-FE02-4501-9D3A-E8C7D77FC556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetModule2_2.NAL", "NetModule2_2.NAL\NetModule2_2.NAL.csproj", "{151247E5-6285-4B12-9596-B492FFDA0E29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetModule2_2.NAL", "NetModule2_2.NAL\NetModule2_2.NAL.csproj", "{151247E5-6285-4B12-9596-B492FFDA0E29}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetModule2_2.EAL", "NetModule2_2.MAL\NetModule2_2.EAL.csproj", "{31A8BFD0-7710-4E9A-9EF6-CFB6AD72D132}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{151247E5-6285-4B12-9596-B492FFDA0E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{151247E5-6285-4B12-9596-B492FFDA0E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{151247E5-6285-4B12-9596-B492FFDA0E29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A8BFD0-7710-4E9A-9EF6-CFB6AD72D132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A8BFD0-7710-4E9A-9EF6-CFB6AD72D132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A8BFD0-7710-4E9A-9EF6-CFB6AD72D132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A8BFD0-7710-4E9A-9EF6-CFB6AD72D132}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
