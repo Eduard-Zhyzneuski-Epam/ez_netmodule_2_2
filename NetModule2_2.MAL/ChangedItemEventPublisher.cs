@@ -16,7 +16,9 @@ namespace NetModule2_2.EAL
         public void Publish(ChangedItem changedItem)
         {
             session ??= OpenSession();
-            session.QueueDeclare("item_changed", true, false, false);
+            session.ExchangeDeclare("dead_letters", "direct", true, false);
+            var args = new Dictionary<string, object> { { "x-dead-letters-exchange", "dead_letters" } };
+            session.QueueDeclare("item_changed", true, false, false, args);
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(changedItem));
             session.BasicPublish("", "item_changed", null, body);
         }
