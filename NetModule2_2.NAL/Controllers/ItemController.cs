@@ -17,12 +17,14 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpGet("/items/category/{categoryId}/pages/{pageNumber}")]
+        [BuyerAccess]
         public IActionResult ListPagedByCategory([FromRoute] int categoryId, [FromRoute] int pageNumber)
         {
             return List(categoryId, pageNumber);
         }
 
         [HttpGet("/items/pages/{pageNumber}")]
+        [BuyerAccess]
         public IActionResult ListPaged([FromRoute] int pageNumber)
         {
             return List(null, pageNumber);
@@ -42,6 +44,7 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpGet("/item/{id}")]
+        [BuyerAccess]
         public IActionResult Get([FromRoute] int id)
         {
             var rawItem = itemService.Get(id);
@@ -50,6 +53,7 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpPost("/item")]
+        [ManagerAccess]
         public IActionResult Create([FromBody] NewItem item)
         {
             var rawItem = Mapping.Map<NewItem, BAL.Item>(item);
@@ -59,6 +63,7 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpPut("/item/{id}")]
+        [ManagerAccess]
         public IActionResult Update([FromBody] UpdatedItem item, [FromRoute] int id)
         {
             var rawItem = Mapping.Map<UpdatedItem, BAL.Item>(item);
@@ -68,6 +73,7 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpDelete("/item/{id}")]
+        [ManagerAccess]
         public IActionResult Delete([FromRoute] int id)
         {
             itemService.Delete(id);

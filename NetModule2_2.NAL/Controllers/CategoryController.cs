@@ -16,6 +16,7 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpGet("category/{id}")]
+        [BuyerAccess]
         public IActionResult Get([FromRoute] int id) 
         { 
             try
@@ -31,14 +32,20 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpGet("categories")]
+        [BuyerAccess]
         public IActionResult List()
         {
+            foreach (var claim in User.Claims)
+            {
+                Console.WriteLine($"{claim.Type}:{claim.Value}");
+            }
             var rawCategories = categoryService.List();
             var categories = rawCategories.Select(c => Mapping.Map<BAL.Category, NAL.Models.Category>(c));
             return Ok(categories);
         }
 
         [HttpPost("category")]
+        [ManagerAccess]
         public IActionResult Create([FromBody] NewCategory category)
         {
             var rawCategory = Mapping.Map<NewCategory, BAL.Category>(category);
@@ -48,6 +55,7 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpPut("category")]
+        [ManagerAccess]
         public IActionResult Update([FromBody] UpdatedCategory category) 
         { 
             var rawCategory = Mapping.Map<UpdatedCategory, BAL.Category>(category);
@@ -56,6 +64,7 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpDelete("category/{id}")]
+        [ManagerAccess]
         public IActionResult Delete([FromRoute] int id)
         {
             categoryService.Delete(id);
