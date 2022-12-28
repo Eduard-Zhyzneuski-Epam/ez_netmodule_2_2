@@ -16,7 +16,6 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpGet("category/{id}")]
-        [BuyerAccess]
         public IActionResult Get([FromRoute] int id) 
         { 
             try
@@ -32,7 +31,6 @@ namespace NetModule2_2.NAL.Controllers
         }
 
         [HttpGet("categories")]
-        [BuyerAccess]
         public IActionResult List()
         {
             foreach (var claim in User.Claims)

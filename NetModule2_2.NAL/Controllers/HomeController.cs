@@ -6,7 +6,6 @@ namespace NetModule2_2.NAL.Controllers
     public class HomeController : Controller
     {
         [HttpGet("")]
-        [BuyerAccess]
         public IActionResult Index()
         {
             var catalog = new
