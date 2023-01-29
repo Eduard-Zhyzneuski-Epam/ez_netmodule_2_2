@@ -44,7 +44,7 @@ namespace NetModule2_2.BAL
             var dbItems = itemRepository.List(categoryId);
             doWeHaveNextPage = dbItems.Count < pageSize * pageNumber;
             return dbItems
-                .Skip(pageSize * pageNumber - 1)
+                .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .Select(dbItem => Mapping.Map<DAL.Item, Item>(dbItem)).ToList();
         }
